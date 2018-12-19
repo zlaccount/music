@@ -1,6 +1,4 @@
 
-6-12
-
 <template>
   <div class="music-list">
     <!--返回上一层-->
@@ -25,8 +23,10 @@
             class="list"
             ref="list">
       <div class="song-list-wrapper">
-        <song-list :songs="songs"></song-list>
+        <song-list @select="selectItem"
+                   :songs="songs"></song-list>
       </div>
+
     </scroll>
   </div>
 </template>
@@ -35,6 +35,7 @@
 import Scroll from 'base/scroll/scroll'
 import SongList from 'base/songList/songList'
 
+import {mapActions} from 'vuex'
 const RESERVO_HEIGHT = 40
 
 export default {
@@ -64,7 +65,16 @@ export default {
     },
     scroll(pos) {
       this.scrollY = pos.y
-    }
+    },
+    selectItem(item,index){
+this.selectPlay({
+        list:this.songs,
+        index
+      })
+    },
+    ...mapActions([
+'selectPlay'
+    ])
   },
   computed: {
     bgStyle() {
@@ -105,6 +115,7 @@ export default {
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+
 @import '~common/stylus/variable'
 @import '~common/stylus/mixin'
 .music-list
