@@ -5,15 +5,12 @@
     <keep-alive>
     <router-view></router-view>
     </keep-alive>
-    <player></player>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import MHeader from 'components/mheader/mheader'
 import Tab from 'components/tab/index'
-import Player from 'components/player/player'
-
 export default {
   data() {
     return {
@@ -22,8 +19,7 @@ export default {
   },
   components: {
     MHeader,
-    Tab,
-    Player
+    Tab
   }
 }
 </script>
