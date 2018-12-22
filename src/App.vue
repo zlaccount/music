@@ -1,16 +1,16 @@
 <template>
-  <div id="app">
-    <m-header></m-header>
-    <tab></tab>
-    <keep-alive>
-    <router-view></router-view>
-    </keep-alive>
-  </div>
+    <div id="app">
+        <m-header></m-header>
+        <tab></tab>
+        <keep-alive> <router-view></router-view> </keep-alive>
+        <player></player>
+    </div>
 </template>
 
 <script type="text/ecmascript-6">
 import MHeader from 'components/mheader/mheader'
-import Tab from 'components/tab/index'
+import Tab from 'components/tab/tab'
+import Player from 'components/player/player'
 export default {
   data() {
     return {
@@ -19,10 +19,10 @@ export default {
   },
   components: {
     MHeader,
-    Tab
+    Tab,
+    Player
   }
 }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
-</style>
+<style scoped lang="stylus" rel="stylesheet/stylus"></style>

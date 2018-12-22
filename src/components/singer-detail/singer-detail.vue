@@ -1,12 +1,16 @@
 <template>
-  <transition name="slide">
-    <music-list :title="title" :bg-image="bgImage" :songs="songs" ></music-list>
-  </transition>
+    <transition name="slide">
+        <music-list
+            :title="title"
+            :bg-image="bgImage"
+            :songs="songs"
+        ></music-list>
+    </transition>
 </template>
 
 <script type="text/ecmascript-6">
 import { mapGetters } from 'vuex'
-import { getSingerDetail, getMusic } from 'api/singer'
+import { getSingerDetail } from 'api/singer'
 import { ERR_OK } from 'api/config'
 import { createSong } from 'common/js/song'
 import MusicList from 'components/musicList/musicList'
@@ -44,23 +48,12 @@ export default {
       if (!list) {
         return
       }
-
       list.forEach((item) => {
-        // console.log(item)
-
         let {musicData} = item
         if (musicData.songid && musicData.albummid) {
-          getMusic(musicData.songmid).then((res) => {
-            if (res.code === ERR_OK) {
-              const svley = res.data.items
-              const songVkey = svley[0].vkey
-              const newSong = createSong(musicData, songVkey)
-              ret.push(newSong)
-            }
-          })
+          ret.push(createSong(musicData))
         }
       })
-      // console.log(ret)
       return ret
     }
   },

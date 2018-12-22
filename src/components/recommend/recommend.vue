@@ -44,7 +44,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Loading from 'base/loading/index'
+import Loading from 'base/loading/loading'
 import Scroll from 'base/scroll/scroll'
 import Slider from 'base/slider/index'
 import {getRecommend, getDiscList} from 'api/recommend'
