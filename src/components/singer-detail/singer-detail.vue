@@ -1,16 +1,14 @@
 <template>
-    <transition name="slide">
-        <music-list
-            :title="title"
-            :bg-image="bgImage"
-            :songs="songs"
-        ></music-list>
-    </transition>
+  <transition name="slide">
+    <music-list :title="title"
+                :bg-image="bgImage"
+                :songs="songs"></music-list>
+  </transition>
 </template>
 
 <script type="text/ecmascript-6">
 import { mapGetters } from 'vuex'
-import { getSingerDetail } from 'api/singer'
+import { getSingerDetail, getMusic } from 'api/singer'
 import { ERR_OK } from 'api/config'
 import { createSong } from 'common/js/song'
 import MusicList from 'components/musicList/musicList'
@@ -37,9 +35,7 @@ export default {
       }
       getSingerDetail(this.singer.id).then((res) => {
         if (res.code === ERR_OK) {
-          // console.log(res.data.list)
           this.songs = this._normalizeSongs(res.data.list)
-          console.log(this.songs)
         }
       })
     },
@@ -49,9 +45,13 @@ export default {
         return
       }
       list.forEach((item) => {
-        let {musicData} = item
+        let { musicData } = item
         if (musicData.songid && musicData.albummid) {
-          ret.push(createSong(musicData))
+          getMusic(musicData.songmid).then((res) => {
+            const svley = res.data.items
+            const songVkey = svley[0].vkey === '' ? '' : svley[0].vkey
+            ret.push(createSong(musicData, songVkey))
+          })
         }
       })
       return ret
@@ -71,7 +71,7 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable'
 .slide-enter-active, .slide-leave-active
-  transition: all 0.3s
+  transition all 0.3s
 .slide-enter, .slide-leave-to
-  transform: translate3d(100%, 0, 0)
+  transform translate3d(100%, 0, 0)
 </style>
